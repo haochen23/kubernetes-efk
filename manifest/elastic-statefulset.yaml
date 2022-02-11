@@ -4,7 +4,7 @@ metadata:
   name: efk-pvc
   namespace: kube-logging
 spec:
-  storageClassName: manual
+  storageClassName: standard
   accessModes:
     - ReadWriteOnce
   resources:

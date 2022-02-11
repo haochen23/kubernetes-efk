@@ -12,3 +12,4 @@ spec:
     - ReadWriteOnce
   hostPath:
     path: "/mnt/ataicmap02/CCTV_ProVision/efk_elastic"
+  persistentVolumeReclaimPolicy: Recycle
