@@ -4,7 +4,7 @@ metadata:
   name: efk-pvc
   namespace: kube-logging
 spec:
-  storageClassName: standard
+  storageClassName: mannual
   accessModes:
     - ReadWriteOnce
   resources:
@@ -19,7 +19,7 @@ metadata:
   namespace: kube-logging
 spec:
   serviceName: elasticsearch
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app: elasticsearch
