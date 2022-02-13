@@ -1,25 +1,11 @@
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: efk-pvc
-  namespace: kube-logging
-spec:
-  storageClassName: mannual
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 100Gi
-
----
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: es-cluster
-  namespace: kube-logging
+  namespace: default
 spec:
   serviceName: elasticsearch
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: elasticsearch
@@ -44,7 +30,7 @@ spec:
           name: inter-node
           protocol: TCP
         volumeMounts:
-        - name: elasticsearch-data
+        - name: data
           mountPath: /usr/share/elasticsearch/data
         env:
           - name: cluster.name
@@ -66,7 +52,7 @@ spec:
         securityContext:
           privileged: true
         volumeMounts:
-        - name: elasticsearch-data
+        - name: data
           mountPath: /usr/share/elasticsearch/data
       - name: increase-vm-max-map #default OS mmaps counts could be to low
         image: busybox
@@ -78,17 +64,13 @@ spec:
         command: ["sh", "-c", "ulimit -n 65536"]
         securityContext:
           privileged: true
-      volumes:
-        - name: elasticsearch-data
-          persistentVolumeClaim:
-            claimName: efk-pvc
-  # volumeClaimTemplates:
-  # - metadata:
-  #     name: elasticsearch-data
-  #     labels:
-  #       app: elasticsearch
-  #   spec:
-  #     accessModes: [ "ReadWriteOnce" ]
-  #     resources:
-  #       requests:
-  #         storage: 100Gi
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+      labels:
+        app: elasticsearch
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
