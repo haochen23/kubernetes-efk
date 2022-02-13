@@ -9,7 +9,7 @@ spec:
   - ReadWriteOnce
   capacity:
     storage: 5Gi
-  persistentVolumeReclaimPolicy: Retain
+  persistentVolumeReclaimPolicy: Recycle
   local:
     path: /mnt/ataicmap02/CCTV_ProVision/efk
   nodeAffinity:
