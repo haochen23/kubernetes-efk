@@ -4,6 +4,7 @@ metadata:
   name: data
   namespace: default
 spec:
+  storageClassName: standard
   accessModes:
     - ReadWriteOnce
   resources:
