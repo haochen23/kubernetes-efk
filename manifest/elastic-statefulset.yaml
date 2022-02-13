@@ -70,7 +70,7 @@ spec:
       labels:
         app: elasticsearch
     spec:
-      storageClassName: standard
+      storageClassName: manual
       accessModes: [ "ReadWriteOnce" ]
       resources:
         requests:
