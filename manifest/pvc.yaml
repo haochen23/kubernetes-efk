@@ -2,7 +2,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: data
-  namespace: default
+  namespace: efk
 spec:
   storageClassName: local-storage
   accessModes:
