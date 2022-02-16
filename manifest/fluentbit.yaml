@@ -5,6 +5,7 @@ metadata:
   namespace: default
   labels:
     app: fluent-bit
+
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -18,6 +19,7 @@ rules:
   - pods
   - namespaces
   verbs: ["get", "list", "watch"]
+
 ---
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
@@ -31,6 +33,7 @@ subjects:
 - kind: ServiceAccount
   name: fluent-bit
   namespace: default
+
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -55,13 +58,12 @@ data:
     @INCLUDE input-kubernetes.conf
     @INCLUDE filter-kubernetes.conf
     @INCLUDE output-elasticsearch.conf
-  #In Path below, mention path of container logs from desired pods that need to be indexed.
-  #For indexing every container  log, set Path as  "/var/log/containers/*.log". This is an hard disk expensive setting.
+
   input-kubernetes.conf: |
     [INPUT]
         Name              tail
         Tag               kube.*
-        Path              /var/log/containers/ne-db-manager*.log
+        Path              /var/log/containers/*.log
         Parser            docker
         DB                /var/log/flb_kube.db
         Mem_Buf_Limit     5MB
@@ -84,11 +86,10 @@ data:
   output-elasticsearch.conf: |
     [OUTPUT]
         Name            es
-        Match           kube.*
+        Match           *
         Host            ${FLUENT_ELASTICSEARCH_HOST}
         Port            ${FLUENT_ELASTICSEARCH_PORT}
         Logstash_Format On
-        Logstash_Prefix fltbit
         Replace_Dots    On
         Retry_Limit     False
 
@@ -138,6 +139,7 @@ data:
         Regex       ^\<(?<pri>[0-9]+)\>(?<time>[^ ]* {1,2}[^ ]* [^ ]*) (?<host>[^ ]*) (?<ident>[a-zA-Z0-9_\/\.\-]*)(?:\[(?<pid>[0-9]+)\])?(?:[^\:]*\:)? *(?<message>.*)$
         Time_Key    time
         Time_Format %b %d %H:%M:%S
+
 ---
 apiVersion: apps/v1
 kind: DaemonSet
@@ -150,8 +152,8 @@ metadata:
     kubernetes.io/cluster-service: "true"
 spec:
   selector:
-    matchLabels:
-      name: fluent-bit
+      matchLabels:
+        name: fluent-bit
   template:
     metadata:
       labels:
@@ -165,7 +167,7 @@ spec:
     spec:
       containers:
       - name: fluent-bit
-        image: fluent/fluent-bit:1.7
+        image: fluent/fluent-bit:1.3.11
         imagePullPolicy: Always
         ports:
           - containerPort: 2020
