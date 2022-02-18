@@ -3,6 +3,8 @@ kind: StatefulSet
 metadata:
   name: es-cluster
   namespace: default
+  labels:
+    app: elasticsearch
 spec:
   serviceName: elasticsearch
   replicas: 2
@@ -53,9 +55,9 @@ spec:
         command: ["sh", "-c", "chown -R 1000:1000 /usr/share/elasticsearch/data"]
         securityContext:
           privileged: true
-        # volumeMounts:
-        # - name: data
-        #   mountPath: /usr/share/elasticsearch/data
+        volumeMounts:
+        - name: data
+          mountPath: /usr/share/elasticsearch/data
       - name: increase-vm-max-map
         image: busybox
         command: ["sysctl", "-w", "vm.max_map_count=262144"]
@@ -66,14 +68,14 @@ spec:
         command: ["sh", "-c", "ulimit -n 65536"]
         securityContext:
           privileged: true
-  # volumeClaimTemplates:
-  # - metadata:
-  #     name: data
-  #     labels:
-  #       app: elasticsearch
-  #   spec:
-  #     storageClassName: local-storage
-  #     accessModes: [ "ReadWriteOnce" ]
-  #     resources:
-  #       requests:
-  #         storage: 50Gi
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+      labels:
+        app: elasticsearch
+    spec:
+      storageClassName: local-storage
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 50Gi
