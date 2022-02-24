@@ -59,7 +59,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: data2
+  name: data3
   namespace: default
 spec:
   persistentVolumeReclaimPolicy: Delete
