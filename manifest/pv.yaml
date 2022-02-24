@@ -55,3 +55,28 @@ spec:
           - atvmscongd01.aucklandtransport.govt.nz
           - atvmscond01.aucklandtransport.govt.nz
 
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: data2
+  namespace: default
+spec:
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: local-storage
+  capacity:
+    storage: 50Gi
+  accessModes:
+    - ReadWriteOnce
+  local:
+    path: /mnt/ataicmap02/CCTV_ProVision/efk3
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - atvmscongd01.aucklandtransport.govt.nz
+          - atvmscond01.aucklandtransport.govt.nz
+
