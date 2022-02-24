@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: fluent-bit
-  namespace: default
+  namespace: efk
   labels:
     app: fluent-bit
 
@@ -32,14 +32,14 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: fluent-bit
-  namespace: default
+  namespace: efk
 
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: fluent-bit-config
-  namespace: default
+  namespace: efk
   labels:
     k8s-app: fluent-bit
 data:
@@ -145,7 +145,7 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: fluent-bit
-  namespace: default
+  namespace: efk
   labels:
     name: fluent-bit
     version: v1

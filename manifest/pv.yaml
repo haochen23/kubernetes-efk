@@ -10,7 +10,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: data
-  namespace: default
+  namespace: efk
 spec:
   persistentVolumeReclaimPolicy: Delete
   storageClassName: local-storage
@@ -35,7 +35,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: data2
-  namespace: default
+  namespace: efk
 spec:
   persistentVolumeReclaimPolicy: Delete
   storageClassName: local-storage
@@ -60,7 +60,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: data3
-  namespace: default
+  namespace: efk
 spec:
   persistentVolumeReclaimPolicy: Delete
   storageClassName: local-storage
