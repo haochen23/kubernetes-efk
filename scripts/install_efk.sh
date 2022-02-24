@@ -1,3 +1,6 @@
+kubectl apply -f manifest/kube-logging-ns.yaml
+
+
 kubectl apply -f manifest/elastic-svc.yaml
 kubectl apply -f manifest/pv.yaml
 kubectl apply -f manifest/elastic-statefulset.yaml
