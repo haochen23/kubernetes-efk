@@ -1,0 +1,1 @@
+helm upgrade efk --install efk/
