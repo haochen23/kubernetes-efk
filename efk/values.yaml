@@ -1,0 +1,26 @@
+# Default values for efk.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+global:
+  ns: efk
+
+elasticsearch:
+  clusterName: k8s-logs
+  cpuBase: 500m
+  memoryBase: 1Gi
+  cpuLimit: 1000m
+  memoryLimit: 2Gi
+  image: docker.elastic.co/elasticsearch/elasticsearch:7.17.0
+  storageClaim: 50Gi
+
+fluentbit:
+  image: fluent/fluent-bit:1.7
+
+kibana:
+  image: docker.elastic.co/kibana/kibana:7.17.0
+  nodePort: 31997
+  cpuBase: 700m
+  memoryBase: 1Gi
+  cpuLimit: 1000m
+  memoryLimit: 1Gi
+

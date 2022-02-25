@@ -1,0 +1,82 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: local-storage
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: WaitForFirstConsumer
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: data
+  namespace: {{ .Values.global.ns }}
+spec:
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: local-storage
+  capacity:
+    storage: {{ .Values.elasticsearch.storageClaim }}
+  accessModes:
+    - ReadWriteOnce
+  local:
+    path: /mnt/ataicmap02/CCTV_ProVision/efk
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - atvmscongd01.aucklandtransport.govt.nz
+          - atvmscond01.aucklandtransport.govt.nz
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: data2
+  namespace: {{ .Values.global.ns }}
+spec:
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: local-storage
+  capacity:
+    storage: {{ .Values.elasticsearch.storageClaim }}
+  accessModes:
+    - ReadWriteOnce
+  local:
+    path: /mnt/ataicmap02/CCTV_ProVision/efk2
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - atvmscongd01.aucklandtransport.govt.nz
+          - atvmscond01.aucklandtransport.govt.nz
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: data3
+  namespace: {{ .Values.global.ns }}
+spec:
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: local-storage
+  capacity:
+    storage: {{ .Values.elasticsearch.storageClaim }}
+  accessModes:
+    - ReadWriteOnce
+  local:
+    path: /mnt/ataicmap02/CCTV_ProVision/efk3
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - atvmscongd01.aucklandtransport.govt.nz
+          - atvmscond01.aucklandtransport.govt.nz
+

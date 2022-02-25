@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kibana
+  namespace: {{ .Values.global.ns }}
+  labels:
+    app: kibana
+spec:
+  type: NodePort
+  ports:
+  - nodePort: {{ .Values.kibana.nodePort }}
+    port: 5601
+  selector:
+    app: kibana
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kibana
+  namespace: {{ .Values.global.ns }}
+  labels:
+    app: kibana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kibana
+  template:
+    metadata:
+      labels:
+        app: kibana
+    spec:
+      containers:
+      - name: kibana
+        image: {{ .Values.kibana.image }}
+        resources:
+          limits:
+            cpu: {{ .Values.kibana.cpuLimit}}
+            memory: {{ .Values.kibana.memoryLimit}}
+          requests:
+            cpu: {{ .Values.kibana.cpuBase }}
+            memory: {{ .Values.kibana.memoryBase }}
+        env:
+          - name: ELASTICSEARCH_URL
+            value: http://elasticsearch:9200
+        ports:
+        - containerPort: 5601
