@@ -1,1 +1,1 @@
-helm upgrade efk --install efk/
+helm upgrade efk --install helm/
