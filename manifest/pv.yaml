@@ -29,6 +29,8 @@ spec:
           values:
           - atvmscongd01.aucklandtransport.govt.nz
           - atvmscond01.aucklandtransport.govt.nz
+          - atvmscond02.aucklandtransport.govt.nz
+          - atvmscond03.aucklandtransport.govt.nz
 
 ---
 apiVersion: v1
@@ -54,6 +56,9 @@ spec:
           values:
           - atvmscongd01.aucklandtransport.govt.nz
           - atvmscond01.aucklandtransport.govt.nz
+          - atvmscond02.aucklandtransport.govt.nz
+          - atvmscond03.aucklandtransport.govt.nz
+
 
 ---
 apiVersion: v1
@@ -79,4 +84,6 @@ spec:
           values:
           - atvmscongd01.aucklandtransport.govt.nz
           - atvmscond01.aucklandtransport.govt.nz
+          - atvmscond02.aucklandtransport.govt.nz
+          - atvmscond03.aucklandtransport.govt.nz
 
